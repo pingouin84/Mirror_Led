@@ -2,7 +2,7 @@ import Tetris
 import Matrice
 import time
 
-#dsfdsfsdf
+#dsfdsfsdfezrezr
 def main():
         tetris =  Tetris.Tetris()
         tetris.tetrisInit()
