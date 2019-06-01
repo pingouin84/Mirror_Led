@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install python3 pythonpy python3-pip
+sudo apt-get -y install python3 python3-dev python3-pip
 
 pip3 install pygame
 pip3 install numpy
