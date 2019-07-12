@@ -129,6 +129,7 @@ class Tetris:
 
     def tetrisInit(self):
         self.matrice.initMatrice()
+        self.matrice.initControl()
         self.matrice.showPixels()
 
         self.clearField()
@@ -144,12 +145,20 @@ class Tetris:
 
     def runTetris(self):
         print("runTetris")
-        # tetrisInit();
+        # tetrisInit()
 
         while self.tetrisRunning:
             while (self.curTime - self.prevUpdateTime) < self.brickSpeed:
-                # readInput();
-                self.matrice.control()
+                # readInput()
+                curControl = self.matrice.control()
+                if curControl == self.matrice.BTN_LEFT:
+                    self.shiftActiveBrick(self.DIR_LEFT)
+                elif curControl == self.matrice.BTN_RIGHT:
+                    self.shiftActiveBrick(self.DIR_RIGHT)
+                elif curControl == self.matrice.BTN_DOWN:
+                    self.shiftActiveBrick(self.DIR_DOWN)
+                elif curControl == self.matrice.BTN_UP:
+                    self.rotateActiveBrick()
                 # if (reseau.curControl != BTN_NONE):
                 # .playerControlActiveBrick()
                 self.printField()
@@ -216,7 +225,7 @@ class Tetris:
 
         # Set color of brick
         self.activeBrick.color = self.matrice.colorLib[selectedColor]
-        # activeBrick.color = colorLib[1];
+        # self.activeBrick.color = colorLib[1]
 
         # Copy pix array of selected Brick
         # for y in range(self.MAX_BRICK_SIZE):
@@ -263,11 +272,11 @@ class Tetris:
         # Two possibilities when collision is detected:
         #    -Direction was LEFT/RIGHT, just revert position back
         #    -Direction was DOWN, revert position and fix block to field on collision
-        # When no collision, keep activeBrick coordinates
+        # When no collision, keep self.activeBrick coordinates
         if self.checkSidesCollision(self.activeBrick) or self.checkFieldCollision(
             self.activeBrick
         ):
-            # Serial.println("coll");
+            # Serial.println("coll")
             if dir == self.DIR_LEFT:
                 self.activeBrick.xpos += 1
             elif dir == self.DIR_RIGHT:
@@ -309,7 +318,7 @@ class Tetris:
                     and self.activeBrick.pix[by, bx]
                 ):
                     # Check if inside playing field
-                    # field.pix[fy,fx] = field.pix[fy,fx] || activeBrick.pix[by,bx]
+                    # field.pix[fy,fx] = field.pix[fy,fx] || self.activeBrick.pix[by,bx]
                     self.field.pix[fy, fx] = self.activeBrick.pix[by, bx]
                     self.field.color[fy, fx] = self.activeBrick.color
 
@@ -334,16 +343,16 @@ class Tetris:
                 y += 1
                 minY += 1
                 self.printField()
-                time.sleep(0, 1)
+                time.sleep(0.1)
 
-                nbRowsThisLevel += 1
-                nbRowsTotal += 1
+                self.nbRowsThisLevel += 1
+                self.nbRowsTotal += 1
 
-                if nbRowsThisLevel >= self.LEVELUP:
-                    nbRowsThisLevel = 0
-                    brickSpeed = brickSpeed - self.SPEED_STEP
-                    if brickSpeed < 200:
-                        brickSpeed = 200
+                if self.nbRowsThisLevel >= self.LEVELUP:
+                    self.nbRowsThisLevel = 0
+                    self.brickSpeed -= self.SPEED_STEP
+                    if self.brickSpeed < 200:
+                        self.brickSpeed = 200
 
         print("checkFullLines_end")
 
@@ -351,7 +360,7 @@ class Tetris:
         print("printField")
         for x in range(self.matrice.FIELD_WIDTH):
             for y in range(self.matrice.FIELD_HEIGHT):
-                activeBrickPix = 0
+                self.activeBrickPix = 0
                 if self.activeBrick.enabled:
                     # Only draw brick if it is enabled
                     # Now check if brick is "in view"
@@ -361,14 +370,14 @@ class Tetris:
                         and (y >= self.activeBrick.ypos)
                         and (y < (self.activeBrick.ypos + (self.activeBrick.siz)))
                     ):
-                        activeBrickPix = (self.activeBrick.pix)[
+                        self.activeBrickPix = (self.activeBrick.pix)[
                             y - self.activeBrick.ypos, x - self.activeBrick.xpos
                         ]
 
                 if self.field.pix[y, x] == 1:
                     self.matrice.setTablePixel(x, y, self.field.color[y, x])
 
-                elif activeBrickPix == 1:
+                elif self.activeBrickPix == 1:
                     self.matrice.setTablePixel(x, y, self.activeBrick.color)
 
                 else:
@@ -385,9 +394,75 @@ class Tetris:
             return
 
         for y in range(startRow - 1, 0, -1):
-            # for (y = startRow - 1; y > 0; y--)
+            # for (y = startRow - 1 y > 0 y--)
             for x in range(self.matrice.FIELD_WIDTH):
                 self.field.pix[y + 1, x] = self.field.pix[y, x]
                 self.field.color[y + 1, x] = self.field.color[y, x]
 
         print("moveFieldDownOne_end")
+
+
+    def rotateActiveBrick(self):
+        tmpBrick = Brick()
+        #Copy active brick pix array to temporary pix array
+        for y in range(self.MAX_BRICK_SIZE):
+            for x in range(self.MAX_BRICK_SIZE):
+                tmpBrick.pix[x][y] = self.activeBrick.pix[x][y]
+
+        tmpBrick.xpos = self.activeBrick.xpos
+        tmpBrick.ypos = self.activeBrick.ypos
+        tmpBrick.siz = self.activeBrick.siz
+        
+        #Depending on size of the active brick, we will rotate differently
+        if self.activeBrick.siz == 3:
+            #Perform rotation around center pix
+            tmpBrick.pix[0][0] = self.activeBrick.pix[0][2]
+            tmpBrick.pix[0][1] = self.activeBrick.pix[1][2]
+            tmpBrick.pix[0][2] = self.activeBrick.pix[2][2]
+            tmpBrick.pix[1][0] = self.activeBrick.pix[0][1]
+            tmpBrick.pix[1][1] = self.activeBrick.pix[1][1]
+            tmpBrick.pix[1][2] = self.activeBrick.pix[2][1]
+            tmpBrick.pix[2][0] = self.activeBrick.pix[0][0]
+            tmpBrick.pix[2][1] = self.activeBrick.pix[1][0]
+            tmpBrick.pix[2][2] = self.activeBrick.pix[2][0]
+            #Keep other parts of temporary block clear
+            tmpBrick.pix[0][3] = 0
+            tmpBrick.pix[1][3] = 0
+            tmpBrick.pix[2][3] = 0
+            tmpBrick.pix[3][3] = 0
+            tmpBrick.pix[3][2] = 0
+            tmpBrick.pix[3][1] = 0
+            tmpBrick.pix[3][0] = 0
+            
+        elif self.activeBrick.siz == 4:
+            #Perform rotation around center "cross"
+            tmpBrick.pix[0][0] = self.activeBrick.pix[0][3]
+            tmpBrick.pix[0][1] = self.activeBrick.pix[1][3]
+            tmpBrick.pix[0][2] = self.activeBrick.pix[2][3]
+            tmpBrick.pix[0][3] = self.activeBrick.pix[3][3]
+            tmpBrick.pix[1][0] = self.activeBrick.pix[0][2]
+            tmpBrick.pix[1][1] = self.activeBrick.pix[1][2]
+            tmpBrick.pix[1][2] = self.activeBrick.pix[2][2]
+            tmpBrick.pix[1][3] = self.activeBrick.pix[3][2]
+            tmpBrick.pix[2][0] = self.activeBrick.pix[0][1]
+            tmpBrick.pix[2][1] = self.activeBrick.pix[1][1]
+            tmpBrick.pix[2][2] = self.activeBrick.pix[2][1]
+            tmpBrick.pix[2][3] = self.activeBrick.pix[3][1]
+            tmpBrick.pix[3][0] = self.activeBrick.pix[0][0]
+            tmpBrick.pix[3][1] = self.activeBrick.pix[1][0]
+            tmpBrick.pix[3][2] = self.activeBrick.pix[2][0]
+            tmpBrick.pix[3][3] = self.activeBrick.pix[3][0]
+        else:
+            print("Brick size error")
+        
+        
+        #Now validate by checking collision.
+        #Collision possibilities:
+        #      -Brick now sticks outside field
+        #      -Brick now sticks inside fixed bricks of field
+        #In case of collision, we just discard the rotated temporary brick
+        if not self.checkSidesCollision(tmpBrick) and not self.checkFieldCollision(tmpBrick):
+            #Copy temporary brick pix array to active pix array
+            for y in range(self.MAX_BRICK_SIZE):
+                for x in range(self.MAX_BRICK_SIZE):
+                    self.activeBrick.pix[x][y] = tmpBrick.pix[x][y]

@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from math import pi
 
 DEBUG = True
@@ -29,6 +30,11 @@ class Matrice:
     RED = (255, 0, 0)
     YELLOW = (247, 255, 0)
 
+    BTN_RIGHT = (1, 0)
+    BTN_LEFT = (-1, 0)
+    BTN_UP = (0, 1)
+    BTN_DOWN = (0, -1)
+
     def __init__(self):
         # self.BLACK = 0x000000
         # self.BLUE = 0x001F
@@ -56,13 +62,27 @@ class Matrice:
         #self.pixels.fill((255, 0, 0))
 
         
-        
+    def initControl(self):
+        #On compte les joysticks
+        nb_joysticks = pygame.joystick.get_count()
+
+        #Et on en crée un s'il y a en au moins un
+        if nb_joysticks > 0:
+            mon_joystick = pygame.joystick.Joystick(0)
+            mon_joystick.init() #Initialisation
+
+        if not mon_joystick:
+            return False
+        else:
+            return True
 
     def control(self):
         self.clock.tick(10)
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
                 done = True  # Flag that we are done so we exit this loop
+            if event.type == JOYHATMOTION:
+                return event.value
 
     def showPixels(self):
         pygame.display.flip()
@@ -85,7 +105,7 @@ class Matrice:
             
 
         #value = (self.FIELD_WIDTH-x)*self.FIELD_HEIGHT + (self.FIELD_HEIGHT-y)
-        print("{} : {}".format(value,color))
+        #print("{} : {}".format(value,color))
 
         if not DEBUG:
             self.pixels[value] = tuple(color) #(0,255,0)
