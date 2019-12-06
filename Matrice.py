@@ -3,6 +3,7 @@ from pygame.locals import *
 from math import pi
 
 DEBUG = True
+SCALE = 1
 
 if not DEBUG:
     import board
@@ -49,9 +50,11 @@ class Matrice:
 
     def initMatrice(self):
         pygame.init()
-        size = [120, 200]
-        self.screen = pygame.display.set_mode(size)
+        size = [12*SCALE, 20*SCALE]
+        self.screen = pygame.display.set_mode(size,pygame.SCALED)
+
         pygame.display.set_caption("Example code for the draw module")
+        
         self.clock = pygame.time.Clock()
         #self.screen.fill((255,0,0))
 
@@ -91,7 +94,7 @@ class Matrice:
             self.pixels.show()
 
     def setTablePixel(self, x, y, color):
-        pygame.draw.rect(self.screen, color, [x * 10, y * 10, 10, 10])
+        pygame.draw.rect(self.screen, color, [x * SCALE, y * SCALE, SCALE, SCALE])
         #FIELD_WIDTH = 12
         #FIELD_HEIGHT = 20
         #value = (12-x)*20 + (20-y)
