@@ -71,10 +71,10 @@ class Matrice:
             mon_joystick = pygame.joystick.Joystick(0)
             mon_joystick.init() #Initialisation
 
-        if not mon_joystick:
-            return False
-        else:
             return True
+        
+        return False
+
 
     def control(self):
         self.clock.tick(10)

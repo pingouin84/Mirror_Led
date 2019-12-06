@@ -144,7 +144,7 @@ class Tetris:
         self.prevUpdateTime = self.curTime
 
     def runTetris(self):
-        print("runTetris")
+        #print("runTetris")
         # tetrisInit()
 
         while self.tetrisRunning:
@@ -197,7 +197,7 @@ class Tetris:
         # self.matrice.fadeOut()
 
     def clearField(self):
-        print("clearField")
+        #print("clearField")
 
         for y in range(self.matrice.FIELD_HEIGHT):
             for x in range(self.matrice.FIELD_WIDTH):
@@ -208,11 +208,11 @@ class Tetris:
         self.field.pix[self.matrice.FIELD_HEIGHT] = 1
 
     def newActiveBrick(self):
-        print("newActiveBrick")
+        #print("newActiveBrick")
         # uint8_t selectedBrick = 3
         selectedBrick = random.randrange(6)
         selectedColor = random.randrange(3)
-        print("newActiveBrick ===============" + repr(selectedBrick))
+        #print("newActiveBrick ===============" + repr(selectedBrick))
 
         # Set properties of brick
         self.activeBrick.siz = self.brickLib[selectedBrick].siz
@@ -236,12 +236,12 @@ class Tetris:
         # Check collision, if already, then game is over
         if self.checkFieldCollision(self.activeBrick):
             self.tetrisGameOver = True
-            print("Game Over")
+            #print("Game Over")
 
-        print("newActiveBrick_end")
+        #print("newActiveBrick_end")
 
     def checkFieldCollision(self, brick):
-        print("checkFieldCollision")
+        #print("checkFieldCollision")
         for by in range(self.MAX_BRICK_SIZE):
             for bx in range(self.MAX_BRICK_SIZE):
                 fx = brick.xpos + bx
@@ -256,7 +256,7 @@ class Tetris:
                 ):
                     return True
 
-        print("checkFieldCollision_end")
+        #print("checkFieldCollision_end")
         return False
 
     def shiftActiveBrick(self, dir):
@@ -289,7 +289,7 @@ class Tetris:
 
     # Check collision between specified brick and all sides of the playing field
     def checkSidesCollision(self, brick):
-        print("checkSidesCollision")
+        #print("checkSidesCollision")
         # Check vertical collision with sides of field
         for by in range(self.MAX_BRICK_SIZE ):
             for bx in range(self.MAX_BRICK_SIZE ):
@@ -300,7 +300,7 @@ class Tetris:
                     if fx < 0 or fx >= self.matrice.FIELD_WIDTH:
                         return True
 
-        print("checkSidesCollision_end")
+        #print("checkSidesCollision_end")
         return False
 
     # Copy active pixels to field, including color
@@ -323,7 +323,7 @@ class Tetris:
                     self.field.color[fy, fx] = self.activeBrick.color
 
     def checkFullLines(self):
-        print("checkFullLines")
+        #print("checkFullLines")
         minY = 0
         for y in range(self.matrice.FIELD_HEIGHT - 1, minY, -1):
             rowSum = 0
@@ -354,10 +354,10 @@ class Tetris:
                     if self.brickSpeed < 200:
                         self.brickSpeed = 200
 
-        print("checkFullLines_end")
+        #print("checkFullLines_end")
 
     def printField(self):
-        print("printField")
+        #print("printField")
         for x in range(self.matrice.FIELD_WIDTH):
             for y in range(self.matrice.FIELD_HEIGHT):
                 self.activeBrickPix = 0
@@ -384,13 +384,13 @@ class Tetris:
                     self.matrice.setTablePixel(x, y, self.matrice.BLACK)
 
         self.matrice.showPixels()
-        print("printField_end")
+        #print("printField_end")
 
     def moveFieldDownOne(self, startRow):
-        print("moveFieldDownOne")
+        #print("moveFieldDownOne")
         if startRow == 0:
             # Topmost row has nothing on top to move...
-            print("moveFieldDownOne_end")
+            #print("moveFieldDownOne_end")
             return
 
         for y in range(startRow - 1, 0, -1):
@@ -399,7 +399,7 @@ class Tetris:
                 self.field.pix[y + 1, x] = self.field.pix[y, x]
                 self.field.color[y + 1, x] = self.field.color[y, x]
 
-        print("moveFieldDownOne_end")
+        #print("moveFieldDownOne_end")
 
 
     def rotateActiveBrick(self):
