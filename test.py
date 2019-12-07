@@ -30,7 +30,17 @@ pygame.display.set_caption("Example code for the draw module")
 # Loop until the user clicks the close button.
 done = False
 clock = pygame.time.Clock()
-mon_joystick = pygame.joystick.Joystick
+
+#mon_joystick = pygame.joystick.Joystick
+nb_joysticks = pygame.joystick.get_count()
+if nb_joysticks > 0:
+        #if mon_joystick == pygame.joystick.Joystick:
+        mon_joystick = pygame.joystick.Joystick(0)
+        mon_joystick.init() #Initialisation
+        print("Axes :", mon_joystick.get_numaxes())
+        print("Boutons :", mon_joystick.get_numbuttons())
+        print("Trackballs :", mon_joystick.get_numballs())
+        print("Hats :", mon_joystick.get_numhats())
 
 while not done:
 
@@ -43,34 +53,28 @@ while not done:
 
     #Et on en crée un s'il y a en au moins un
     if nb_joysticks > 0:
-        if mon_joystick == pygame.joystick.Joystick:
-            mon_joystick = pygame.joystick.Joystick(0)
-            mon_joystick.init() #Initialisation
-            print("Axes :", mon_joystick.get_numaxes())
-            print("Boutons :", mon_joystick.get_numbuttons())
-            print("Trackballs :", mon_joystick.get_numballs())
-            print("Hats :", mon_joystick.get_numhats())
-
-
-
-    for event in pygame.event.get():  # User did something
-        if event.type == pygame.QUIT:  # If user clicked close
-            done = True  # Flag that we are done so we exit this loop
-        if event.type == JOYBUTTONDOWN:
-	        print(event.button)
-        if event.type == JOYAXISMOTION:
-            if event.axis == 0 and event.value > 0:
-                print("droite %d",event.value)
-            if event.axis == 0 and event.value < 0:
-                print("gauche %d",event.value)
-        if event.type == JOYHATMOTION:
-            print(event.hat,h[event.value])
-            #if event.Hats == 0 and event.value > 0:
-                #print("droite %d",event.value)
-            #if event.axis == 0 and event.value < 0:
-                #print("gauche %d",event.value)
-        #if event.type != 7:
-            #print(event.type)
+        for event in pygame.event.get():  # User did something
+            if event.type == pygame.QUIT:  # If user clicked close
+                done = True  # Flag that we are done so we exit this loop
+            if event.type == JOYBUTTONDOWN:
+                print(event.button)
+            if event.type == KEYDOWN:
+                print(event.button)
+            if event.type == MOUSEBUTTONDOWN:
+                print(event.button)
+            if event.type == JOYAXISMOTION:
+                if event.axis == 0 and event.value > 0:
+                    print("droite %d",event.value)
+                if event.axis == 0 and event.value < 0:
+                    print("gauche %d",event.value)
+            if event.type == JOYHATMOTION:
+                print(event.hat,h[event.value])
+                #if event.Hats == 0 and event.value > 0:
+                    #print("droite %d",event.value)
+                #if event.axis == 0 and event.value < 0:
+                    #print("gauche %d",event.value)
+            #if event.type != 7:
+                #print(event.type)
 
 
 

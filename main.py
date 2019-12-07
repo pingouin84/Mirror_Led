@@ -1,13 +1,17 @@
 #by Florian DUCORD
 
+import Menu
 import Tetris
 import Matrice
 import time
 
 def main():
-        tetris =  Tetris.Tetris()
-        tetris.tetrisInit()
-        tetris.runTetris()
+        menu = Menu.Menu()
+        menu.afficher_menu()
+
+        #tetris =  Tetris.Tetris()
+        #tetris.tetrisInit()
+        #tetris.runTetris()
 
 
 def test_matrice():

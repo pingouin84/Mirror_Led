@@ -1,4 +1,5 @@
 import pygame
+import time
 from pygame.locals import *
 from math import pi
 
@@ -36,6 +37,9 @@ class Matrice:
     BTN_UP = (0, 1)
     BTN_DOWN = (0, -1)
 
+    BTN_KILL = 256
+    BTN_START = 1
+
     def __init__(self):
         # self.BLACK = 0x000000
         # self.BLUE = 0x001F
@@ -51,7 +55,7 @@ class Matrice:
     def initMatrice(self):
         pygame.init()
         size = [12*SCALE, 20*SCALE]
-        self.screen = pygame.display.set_mode(size,pygame.SCALED)
+        self.screen = pygame.display.set_mode(size)#,pygame.SCALED)
 
         pygame.display.set_caption("Example code for the draw module")
         
@@ -83,9 +87,11 @@ class Matrice:
         self.clock.tick(10)
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
-                done = True  # Flag that we are done so we exit this loop
+                return event.type
             if event.type == JOYHATMOTION:
                 return event.value
+            if event.type == JOYBUTTONDOWN:
+                print(event.button)
 
     def showPixels(self):
         pygame.display.flip()
@@ -113,3 +119,24 @@ class Matrice:
         if not DEBUG:
             self.pixels[value] = tuple(color) #(0,255,0)
 
+    def afficher_heure(self):
+        self.screen.fill(self.BLACK)
+        #font = pygame.font.SysFont ( "free" ,  6 )
+        #font_name = "Pixeled.ttf" #5
+        #font_name = "Picopixel.ttf" #7
+        font_name = "Picopixel.ttf"
+        #font = pygame.font.SysFont ( font_name ,  5 )
+        font = pygame.font.Font(font_name,7)
+
+        val_time = time.localtime()
+        val_heure = time.strftime("%H")
+        val_minute = time.strftime("%M")
+        val_seconde = time.strftime("%S")
+
+        text = font.render(val_heure, True, self.GREEN)
+        self.screen.blit(text,[2, 0])
+        text = font.render(val_minute, True, self.GREEN)
+        self.screen.blit(text,[2, 7])
+        text = font.render(val_seconde, True, self.GREEN)
+        self.screen.blit(text,[2, 14])
+        pygame.display.flip()

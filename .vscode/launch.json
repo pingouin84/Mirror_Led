@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python : 8BitDo",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python : Mirror Led",
             "type": "python",
             "request": "launch",
