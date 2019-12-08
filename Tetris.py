@@ -151,7 +151,9 @@ class Tetris:
             while (self.curTime - self.prevUpdateTime) < self.brickSpeed:
                 # readInput()
                 curControl = self.matrice.control()
-                if curControl == self.matrice.BTN_LEFT:
+                if curControl == self.matrice.BTN_KILL:
+                    self.tetrisGameOver = True
+                elif curControl == self.matrice.BTN_LEFT:
                     self.shiftActiveBrick(self.DIR_LEFT)
                 elif curControl == self.matrice.BTN_RIGHT:
                     self.shiftActiveBrick(self.DIR_RIGHT)

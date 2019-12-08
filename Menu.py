@@ -1,4 +1,5 @@
 from Matrice import Matrice
+import Tetris
 
 class Menu:
 
@@ -8,12 +9,17 @@ class Menu:
     def afficher_menu(self):
         self.matrice.initMatrice()
         self.matrice.initControl()
-        self.tetrisRunning = True
-        
-        while self.tetrisRunning:
+        self.stop = True
+
+        while self.stop:
             self.matrice.afficher_heure()
             curControl = self.matrice.control()
             if curControl == 256:
-                self.tetrisRunning = False
+                self.stop = False
+
+            if curControl == Matrice.BTN_START:
+                tetris =  Tetris.Tetris()
+                tetris.tetrisInit()
+                tetris.runTetris()
 
 

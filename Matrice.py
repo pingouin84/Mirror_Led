@@ -4,7 +4,7 @@ from pygame.locals import *
 from math import pi
 
 DEBUG = True
-SCALE = 1
+SCALE = 10
 
 if not DEBUG:
     import board
@@ -38,7 +38,19 @@ class Matrice:
     BTN_DOWN = (0, -1)
 
     BTN_KILL = 256
-    BTN_START = 1
+    BTN_START = 11
+    BTN_SELECT = 12
+    BTN_A = 0
+    BTN_B = 1
+    BTN_X = 3
+    BTN_Y = 4
+    BTN_R3 = 14
+    BTN_R2 = 9
+    BTN_R1 = 7
+    BTN_L3 = 13
+    BTN_L2 = 8
+    BTN_L1 = 6
+    BTN_HOME = 3
 
     def __init__(self):
         # self.BLACK = 0x000000
@@ -87,11 +99,17 @@ class Matrice:
         self.clock.tick(10)
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
-                return event.type
+                return self.BTN_KILL
             if event.type == JOYHATMOTION:
                 return event.value
             if event.type == JOYBUTTONDOWN:
                 print(event.button)
+                return event.button
+            if event.type == KEYDOWN:
+                if event.key == 13:
+                    return self.BTN_START
+                print(event.key)
+                return event.key
 
     def showPixels(self):
         pygame.display.flip()
@@ -126,7 +144,7 @@ class Matrice:
         #font_name = "Picopixel.ttf" #7
         font_name = "Picopixel.ttf"
         #font = pygame.font.SysFont ( font_name ,  5 )
-        font = pygame.font.Font(font_name,7)
+        font = pygame.font.Font(font_name,7*SCALE)
 
         val_time = time.localtime()
         val_heure = time.strftime("%H")
@@ -134,9 +152,9 @@ class Matrice:
         val_seconde = time.strftime("%S")
 
         text = font.render(val_heure, True, self.GREEN)
-        self.screen.blit(text,[2, 0])
+        self.screen.blit(text,[2*SCALE, 0*SCALE])
         text = font.render(val_minute, True, self.GREEN)
-        self.screen.blit(text,[2, 7])
+        self.screen.blit(text,[2*SCALE, 7*SCALE])
         text = font.render(val_seconde, True, self.GREEN)
-        self.screen.blit(text,[2, 14])
+        self.screen.blit(text,[2*SCALE, 14*SCALE])
         pygame.display.flip()

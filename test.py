@@ -59,7 +59,7 @@ while not done:
             if event.type == JOYBUTTONDOWN:
                 print(event.button)
             if event.type == KEYDOWN:
-                print(event.button)
+                print(event.key)
             if event.type == MOUSEBUTTONDOWN:
                 print(event.button)
             if event.type == JOYAXISMOTION:
