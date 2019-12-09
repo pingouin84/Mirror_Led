@@ -1,9 +1,14 @@
 #by Florian DUCORD
+import sys
+import config
+if sys.argv[1]=="debug":
+        config.DEBUG = True
 
 import Menu
 import Tetris
 import Matrice
 import time
+
 
 def main():
         menu = Menu.Menu()
