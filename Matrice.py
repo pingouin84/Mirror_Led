@@ -1,3 +1,7 @@
+#Florian DUCORD
+#florian.developpement@gmail.com
+#https://github.com/pingouin84/Mirror_Led.git
+
 import config
 import pygame as pg
 import time

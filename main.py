@@ -1,4 +1,7 @@
-#by Florian DUCORD
+#Florian DUCORD
+#florian.developpement@gmail.com
+#https://github.com/pingouin84/Mirror_Led.git
+
 import sys
 import config
 if sys.argv[1]=="debug":
