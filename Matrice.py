@@ -105,14 +105,16 @@ class Matrice:
         for event in pg.event.get():  # User did something
             if event.type == pg.QUIT:  # If user clicked close
                 return self.BTN_KILL
-            if event.type == pg.JOYHATMOTION:
+            elif event.type == pg.JOYHATMOTION:
                 return event.value
-            if event.type == pg.JOYBUTTONDOWN:
+            elif event.type == pg.JOYBUTTONDOWN:
                 print(event.button)
                 return event.button
-            if event.type == pg.KEYDOWN:
-                if event.key == 13:
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN:
                     return self.BTN_START
+                elif event.key == pg.K_ESCAPE:
+                    return self.BTN_KILL
                 print(event.key)
                 return event.key
 
