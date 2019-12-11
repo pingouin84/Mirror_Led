@@ -1,6 +1,6 @@
-#Florian DUCORD
-#florian.developpement@gmail.com
-#https://github.com/pingouin84/Mirror_Led.git
+# Florian DUCORD
+# florian.developpement@gmail.com
+# https://github.com/pingouin84/Mirror_Led.git
 
 import config
 import pygame as pg
@@ -27,9 +27,7 @@ class Matrice:
     FIELD_WIDTH = 12
     FIELD_HEIGHT = 20
     NUM_PIXELS = 240
-    SCALE = 1
     SIZE = [FIELD_WIDTH, FIELD_HEIGHT]
-    SIZE_SCALE = tuple(10 * x for x in SIZE)
     FONT_MANE = "data/fonts/Picopixel.ttf"
 
     BLACK = (0, 0, 0)
@@ -73,7 +71,10 @@ class Matrice:
 
     def initMatrice(self):
         pg.init()
-        self.screen = pg.display.set_mode(self.SIZE_SCALE)  # ,pg.SCALED)
+        if not config.DEBUG:
+            self.screen = pg.display.set_mode(self.SIZE)  # ,pg.SCALED)
+        else:
+            self.screen = pg.display.set_mode(self.SIZE, pg.SCALED)
 
         pg.display.set_caption("Example code for the draw module")
 
@@ -122,7 +123,7 @@ class Matrice:
             self.pixels.show()
 
     def setTablePixel(self, x, y, color):
-        pg.draw.rect(self.screen, color, self.SIZE_SCALE)
+        pg.draw.rect(self.screen, color, [x, y, 1, 1])
         #FIELD_WIDTH = 12
         #FIELD_HEIGHT = 20
         #value = (12-x)*20 + (20-y)
@@ -147,7 +148,7 @@ class Matrice:
         # font_name = "Pixeled.ttf" #5
         # font_name = "Picopixel.ttf" #7
         #font = pg.font.SysFont ( font_name ,  5 )
-        font = pg.font.Font(self.FONT_MANE, 7 * self.SCALE)
+        font = pg.font.Font(self.FONT_MANE, 7)
 
         #val_time = time.localtime()
         val_heure = time.strftime("%H")
@@ -155,11 +156,11 @@ class Matrice:
         val_seconde = time.strftime("%S")
 
         text = font.render(val_heure, True, self.GREEN)
-        self.screen.blit(text, [3 * self.SCALE, 0 * self.SCALE])
+        self.screen.blit(text, [3, 0])
         text = font.render(val_minute, True, self.GREEN)
-        self.screen.blit(text, [3 * self.SCALE, 7 * self.SCALE])
+        self.screen.blit(text, [3, 7])
         text = font.render(val_seconde, True, self.GREEN)
-        self.screen.blit(text, [3 * self.SCALE, 14 * self.SCALE])
+        self.screen.blit(text, [3, 14])
         pg.display.flip()
         self.actualiser_led()
 
@@ -177,9 +178,9 @@ class Matrice:
                     # print("impair")
                     value = ((self.FIELD_WIDTH-x)*self.FIELD_HEIGHT-1) - y
 
-                if pixels[x,y] > 0:
+                if pixels[x, y] > 0:
                     value = value
 
                 if not config.DEBUG:
-                    self.pixels[value] = pixels[x,y]  # (0,255,0)
+                    self.pixels[value] = pixels[x, y]  # (0,255,0)
                     self.pixels.show()

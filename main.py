@@ -4,8 +4,8 @@
 
 import sys
 import config
-if sys.argv[1]=="debug":
-        config.DEBUG = True
+if len(sys.argv) > 1:
+        config.DEBUG = sys.argv[1]=="debug"
 
 import Menu
 import Tetris
