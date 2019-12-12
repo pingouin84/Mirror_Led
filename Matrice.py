@@ -110,13 +110,18 @@ class Matrice:
             elif event.type == pg.JOYBUTTONDOWN:
                 print(event.button)
                 return event.button
+            # utilisation clavier
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN:
                     return self.BTN_START
                 elif event.key == pg.K_ESCAPE:
                     return self.BTN_KILL
-                print(event.key)
-                return event.key
+                elif event.key == pg.K_LEFT:
+                    return self.BTN_LEFT
+                elif event.key == pg.K_RIGHT:
+                    return self.BTN_RIGHT
+                else:
+                    print(event.key)
 
     def showPixels(self):
         pg.display.flip()
@@ -165,6 +170,11 @@ class Matrice:
         self.screen.blit(text, [3, 14])
         pg.display.flip()
         self.actualiser_led()
+
+    def afficher_image(self,path):
+        image = pg.image.load(path)
+        self.screen.blit(image, (0,0))
+        pg.display.flip()
 
     def actualiser_led(self):
         surface = pg.Surface(self.SIZE)

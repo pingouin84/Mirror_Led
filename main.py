@@ -15,7 +15,7 @@ import time
 
 def main():
         menu = Menu.Menu()
-        menu.afficher_menu()
+        menu.afficher_veille()
 
         #tetris =  Tetris.Tetris()
         #tetris.tetrisInit()
