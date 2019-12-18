@@ -66,7 +66,7 @@ class Menu:
                     self.lancer_tetris()
           
     def lancer_tetris(self):
-        tetris =  Tetris.Tetris()
+        tetris =  Tetris.Tetris(self.matrice)
         tetris.tetrisInit()
         tetris.runTetris()
 

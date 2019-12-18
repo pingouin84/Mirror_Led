@@ -57,12 +57,12 @@ class Tetris:
 
     MAX_BRICK_SIZE = 4
 
-    def __init__(self):
+    def __init__(self,matrice):
         self.BRICKOFFSET = -1  # Y offset for new bricks
         self.INIT_SPEED = 250  # Initial delay in ms between brick drops
         self.SPEED_STEP = 100  # Factor for speed increase between levels, default 10
         self.LEVELUP = 5  # Number of rows before levelup, default 5
-        self.matrice = Matrice()
+        self.matrice = matrice #Matrice()
         # controll
         self.DIR_UP = 1
         self.DIR_DOWN = 2
@@ -128,8 +128,8 @@ class Tetris:
         return int(round(time.time() * 1000))
 
     def tetrisInit(self):
-        self.matrice.initMatrice()
-        self.matrice.initControl()
+        #self.matrice.initMatrice()
+        #self.matrice.initControl()
         self.matrice.showPixels()
 
         self.clearField()
@@ -387,6 +387,7 @@ class Tetris:
                     self.matrice.setTablePixel(x, y, self.matrice.BLACK)
 
         self.matrice.showPixels()
+        #self.matrice.actualiser_led()
         #print("printField_end")
 
     def moveFieldDownOne(self, startRow):

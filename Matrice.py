@@ -203,8 +203,8 @@ class Matrice:
                 if not config.DEBUG:
                     #print("x,y = " +x + ","+y)
                     self.pixels[value] = self.screen.get_at((x, y))[:3]  # (0,255,0)
-        
-        self.pixels.show()
+        if not config.DEBUG:
+            self.pixels.show()
 
     def afficher_score(self, nbRowsTotal):
         pg.draw.rect(self.screen, self.BLACK, [0, 0, self.FIELD_WIDTH, self.FIELD_HEIGHT])
