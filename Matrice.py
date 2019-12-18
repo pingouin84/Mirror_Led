@@ -110,7 +110,10 @@ class Matrice:
                 return event.value
             elif event.type == pg.JOYBUTTONDOWN:
                 print(event.button)
-                return event.button
+                if event.button == self.BTN_SELECT:
+                    return self.BTN_KILL
+                else:
+                    return event.button
             # utilisation clavier
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN:
