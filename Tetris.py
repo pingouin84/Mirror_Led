@@ -174,6 +174,9 @@ class Tetris:
 
             if self.tetrisGameOver:
                 self.matrice.afficher_score(self.nbRowsTotal)
+                self.matrice.actualiser_led()
+                time.sleep(5)
+                
                 # matrice.fadeOut()
                 # char buf[4]
                 # int len = sprintf(buf, "%i", nbRowsTotal)

@@ -212,5 +212,3 @@ class Matrice:
         text = font.render(str(nbRowsTotal), True, self.GREEN)
         self.screen.blit(text, [0, 7])
         pg.display.flip()
-
-        time.sleep(5)
