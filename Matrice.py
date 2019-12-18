@@ -44,7 +44,7 @@ class Matrice:
 
     BTN_KILL = 256
     BTN_START = 11
-    BTN_SELECT = 12
+    BTN_SELECT = 10
     BTN_A = 0
     BTN_B = 1
     BTN_X = 3
@@ -85,6 +85,7 @@ class Matrice:
             self.pixels = neo.NeoPixel(
                 self.PIXEL_PIN, self.NUM_PIXELS, brightness=0.2, auto_write=False, pixel_order=self.ORDER
             )
+            self.pixels.brightness = 255
         #self.pixels.fill((255, 0, 0))
 
     def initControl(self):
@@ -180,6 +181,8 @@ class Matrice:
         self.screen.blit(image, (0,0))
         pg.display.flip()
 
+        self.actualiser_led()
+
     def actualiser_led(self):
         #surface = pg.Surface(self.SIZE)
         pixels = pg.surfarray.array2d(self.screen)
@@ -200,7 +203,8 @@ class Matrice:
                 if not config.DEBUG:
                     #print("x,y = " +x + ","+y)
                     self.pixels[value] = self.screen.get_at((x, y))[:3]  # (0,255,0)
-                    self.pixels.show()
+        
+        self.pixels.show()
 
     def afficher_score(self, nbRowsTotal):
         pg.draw.rect(self.screen, self.BLACK, [0, 0, self.FIELD_WIDTH, self.FIELD_HEIGHT])
