@@ -173,6 +173,7 @@ class Tetris:
             self.prevUpdateTime = self.curTime
 
             if self.tetrisGameOver:
+                self.matrice.afficher_score(self.nbRowsTotal)
                 # matrice.fadeOut()
                 # char buf[4]
                 # int len = sprintf(buf, "%i", nbRowsTotal)

@@ -120,6 +120,10 @@ class Matrice:
                     return self.BTN_LEFT
                 elif event.key == pg.K_RIGHT:
                     return self.BTN_RIGHT
+                elif event.key == pg.K_UP:
+                    return self.BTN_UP
+                elif event.key == pg.K_DOWN:
+                    return self.BTN_DOWN
                 else:
                     print(event.key)
 
@@ -177,7 +181,7 @@ class Matrice:
         pg.display.flip()
 
     def actualiser_led(self):
-        surface = pg.Surface(self.SIZE)
+        #surface = pg.Surface(self.SIZE)
         pixels = pg.surfarray.array2d(self.screen)
 
         for x in range(11):
@@ -196,3 +200,12 @@ class Matrice:
                 if not config.DEBUG:
                     self.pixels[value] = pixels[x, y]  # (0,255,0)
                     self.pixels.show()
+
+    def afficher_score(self, nbRowsTotal):
+        pg.draw.rect(self.screen, self.BLACK, [0, 0, self.FIELD_WIDTH, self.FIELD_HEIGHT])
+        font = pg.font.Font(self.FONT_MANE, 7)
+        text = font.render(str(nbRowsTotal), True, self.GREEN)
+        self.screen.blit(text, [0, 7])
+        pg.display.flip()
+
+        time.sleep(5)
