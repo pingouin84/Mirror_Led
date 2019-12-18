@@ -184,8 +184,8 @@ class Matrice:
         #surface = pg.Surface(self.SIZE)
         pixels = pg.surfarray.array2d(self.screen)
 
-        for x in range(11):
-            for y in range(19):
+        for x in range(12):
+            for y in range(20):
                 if x % 2 == 0:
                     # print("pair")
                     value = ((self.FIELD_WIDTH-x)*self.FIELD_HEIGHT -
@@ -198,7 +198,8 @@ class Matrice:
                     value = value
 
                 if not config.DEBUG:
-                    self.pixels[value] = pixels[x, y]  # (0,255,0)
+                    #print("x,y = " +x + ","+y)
+                    self.pixels[value] = self.screen.get_at((x, y))[:3]  # (0,255,0)
                     self.pixels.show()
 
     def afficher_score(self, nbRowsTotal):
