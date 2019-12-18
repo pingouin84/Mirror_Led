@@ -82,7 +82,7 @@ class Matrice:
         # self.screen.fill((255,0,0))
 
         if not config.DEBUG:
-            self.pixels = self.neo.NeoPixel(
+            self.pixels = neo.NeoPixel(
                 self.PIXEL_PIN, self.NUM_PIXELS, brightness=0.2, auto_write=False, pixel_order=self.ORDER
             )
         #self.pixels.fill((255, 0, 0))
