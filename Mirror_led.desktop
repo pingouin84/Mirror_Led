@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=sh -c "~/Mirror_Led/run_test_dev.sh"
+Name=Miror_Led
+Terminal=true
+Hidden=false
+X-GNOME-Autostart-enabled=true
